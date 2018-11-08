@@ -34,9 +34,23 @@ Object:怪物
 
 Attribute:图片，位置   
 
-Collaborator:小精灵 Events & Actions:碰撞 & 销毁小精灵
-
 Collaborator:界面 Events & Actions:离开界面 & 销毁自己
+
+3、
+
+Object:文本
+
+Attribute:图片，位置
+
+Collaborator:小精灵 Events & Actions:小精灵销毁 & 显示自己
+
+4、
+
+Object：按钮
+
+Attribute:图片，位置
+
+Collaborator:小精灵 Events & Actions:小精灵销毁 & 显示自己
 
 
 ![](images/动画.gif)
