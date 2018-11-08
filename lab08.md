@@ -19,20 +19,24 @@
 ## 二、游戏设计
 
 1、
-|CRC          |                 |
-|:------------|:----------------|
-|Object:小精灵     |                 |
-|Attribute:图片，位置   |                 |
-|Collaborator:怪物|Events & Actions:碰撞 & HP减一|
-|Collaborator:系统|Events & Actions:HP<=0 & 销毁自己| 
+
+Object:小精灵  
+
+Attribute:图片，位置 
+
+Collaborator:怪物  Events & Actions:碰撞 & HP减一
+
+Collaborator:系统  Events & Actions:HP<=0 & 销毁自己
 
 2、 
-|CRC          |                 |
-|:------------|:----------------|
-|Object:怪物      |                 |
-|Attribute:图片，位置   |                 |
-|Collaborator:小精灵|Events & Actions:碰撞 & 销毁小精灵|
-|Collaborator:界面|Events & Actions:离开界面 & 销毁自己|
+
+Object:怪物    
+
+Attribute:图片，位置   
+
+Collaborator:小精灵 Events & Actions:碰撞 & 销毁小精灵
+
+Collaborator:界面 Events & Actions:离开界面 & 销毁自己
 
 
 ![](images/动画.gif)
