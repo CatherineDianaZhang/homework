@@ -26,7 +26,7 @@ Attribute:图片，位置
 
 Collaborator:怪物  Events & Actions:碰撞 & HP减一
 
-Collaborator:系统  Events & Actions:HP<=0 & 销毁自己
+Collaborator:系统 Events & Actions:HP<=0 & 销毁自己
 
 2、 
 
