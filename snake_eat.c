@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <math.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define SNAKE_MAX_LENGTH 20
 #define SNAKE_HEAD 'H'
