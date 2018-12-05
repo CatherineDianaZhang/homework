@@ -95,6 +95,7 @@ int main() {
 				snakeMove (0, -1);			
 				break;			
 		}
+		system("cls");
 		output();	//输出移动后状态	
 	}
 	printf("%s","Came Over!!!");
