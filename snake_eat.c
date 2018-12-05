@@ -100,6 +100,7 @@ void snakeExtent() {//蛇头碰到食物就伸长
 int main() { 	
 	char ch;			
 	output();//输出初始状态	
+	put_money();
 	while(judge()) {//判断游戏是否结束，若未结束，则进行移动 
 		scanf("%c",&ch);				
 		switch(ch) {	//ASDW分别代表的移动方向		
@@ -116,6 +117,8 @@ int main() {
 				snakeMove (0, -1);			
 				break;			
 		}
+		if(moneyX[0] == snakeX[0] && moneyY[0] == snakeY[0])
+			snakeExtent();
 		system("cls");
 		output();	//输出移动后状态	
 	}
