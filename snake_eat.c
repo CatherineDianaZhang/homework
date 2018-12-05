@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h> 
 
 #define SNAKE_MAX_LENGTH 20
 #define SNAKE_HEAD 'H'
@@ -9,11 +10,11 @@
 #define SNAKE_FOOD '$'
 #define WALL_CELL '*'
 
-void snakeMove(int,int);//蛇移动 
-void put_money(void);//放置食物 
-void output(void);//输出字符矩阵 
-int judge(void);//判断游戏是否结束 
-void snakeExtent(void);//蛇吃食物后伸长 
+void snakeMove();//蛇移动 
+void put_money();//放置食物 
+void output();//输出字符矩阵 
+int gameover();//判断游戏是否结束 
+
 
 //初始状态 
 char map[12][12] = {"************",
@@ -31,96 +32,91 @@ char map[12][12] = {"************",
 					};
 
 //蛇身和蛇头的坐标，snakeX[0]和snakeY[o]为蛇头 
-int snakeX[SNAKE_MAX_LENGTH]={5,4,3,2,1};
-int snakeY[SNAKE_MAX_LENGTH]={1,1,1,1,1};
+int snakeX[10]={5,4,3,2,1};
+int snakeY[10]={1,1,1,1,1};
 int snakeLength=5;
 int moneyX,moneyY;
 
-int judge() {
-	int i;
-	if(snakeX[0] == 0 || snakeX[0] == 11 || snakeY[0] == 0 || snakeY[0] == 11)
-		return 0;
-	//碰到墙壁游戏结束 
-	for(i = 1; i < snakeLength; ++ i) {
-		if(snakeX[0] == snakeX[i]&&snakeY[0] == snakeY[i])
-			return 0;
-	} 
-	//碰到自己游戏结束 
-	return 1;
+int main() {
+    put_money();
+    char ch;
+    output();
+    while (1) {
+        scanf(" %c", &ch);
+        snakeMove();
+        switch (ch) {
+        	case 'w' :
+            	snakeY[0] -= 1;
+            	map[snakeY[0]][snakeX[0]] = 'H';
+        	case 's' :
+            	snakeY[0] += 1;
+            	map[snakeY[0]][snakeX[0]] = 'H';
+        	case 'a' :
+            	snakeX[0] -= 1;
+            	map[snakeY[0]][snakeX[0]] = 'H';
+        	case 'd' :
+            	snakeX[0] += 1;
+            	map[snakeY[0]][snakeX[0]] = 'H';
+    	}
+    	if (snakeX[0] == moneyX && snakeY[0] == moneyY) {
+            put_money();
+            snakeLength++;
+            snakeX[snakeLength - 1] = snakeX[snakeLength - 2];
+            snakeY[snakeLength - 1] = snakeY[snakeLength - 2];
+            map[snakeY[snakeLength - 1]][snakeX[snakeLength - 1]] = 'X';
+        }
+        if (!gameover()) {
+            printf("gameover\n");
+        } 
+		else {
+			system("cls");
+            output();
+    	}
+    }
 }
 
+void snakeMove() {
+    int i;
+    map[snakeY[snakeLength - 1]][snakeX[snakeLength - 1]] = ' ';
+    for (i = snakeLength - 1; i > 0; i--) {
+        snakeX[i] = snakeX[i - 1];
+        snakeY[i] = snakeY[i - 1];
+        map[snakeY[i]][snakeX[i]] = 'X';
+    }
+}
+
+int gameover() {
+    if (snakeX[0] == 10 || snakeX[0] == 0) {
+        return 0;
+    }
+    if (snakeY[0] == 10 || snakeY[0] == 0) {
+        return 0;
+    }
+    int i;
+    for (i = 1; i < snakeLength; i++) {
+        if (snakeX[0] == snakeX[i] && snakeY[0] == snakeY[i]) {
+            return 0;
+        }
+    }
+    return 1;
+}
 void output() {
-	int i ,j;
-	for(int i = 0; i < 12; i ++) {
-		for(j = 0; j < 12; j ++)
-			printf("%c",map[i][j]);
-		printf("\n");
-	}
+	int i,j;
+    for (i = 0; i <= 11; i++) {
+        for (j = 0; j <= 11; j++) {
+            printf("%c", map[i][j]);
+        }
+        printf("\n");
+    }
+}
+void put_money() {
+    srand((unsigned)(time(NULL)));
+    moneyX = rand() % 9 + 1;
+    moneyY = rand() % 9 + 1;
+    while (map[moneyY][moneyX] != ' ') {
+        moneyX = rand() % 9 + 1;
+        moneyY = rand() % 9 + 1;
+    }
+    map[moneyY][moneyX] = '$';
 }
 
-void  put_money() {
-	//随机放置食物 
-	int moneyX = rand() % 9;
-	int moneyY = rand() % 9; 
-	//判断位置是否为空 
-	if(map[moneyX][moneyY] == BLANK_CELL) {
-		map[moneyX][moneyY] == SNAKE_FOOD;
-	} 
-	else put_money();//不为空则调用自己 
-}
-
-void snakeMove(int x,int y) {
-	
-	int i;
-	if(snakeX[0] + x == moneyX && snakeY[0] + y == moneyY)
-		snakeExtent();
-	else map[snakeY[snakeLength - 1]][snakeX[snakeLength - 1]] = BLANK_CELL;
-	//蛇向前走，后面一段继承前面一段的位置 
-	for(i = snakeLength -1;i > 0; i --); {
-		snakeX[i] = snakeX[i - 1];
-		snakeY[i] = snakeY[i - 1];
-		map[snakeY[i]][snakeX[i]] = SNAKE_BODY;
-	}
-	snakeX[0] += x;
-	snakeY[0] += y;
-	map[snakeY[0]][snakeX[0]] = SNAKE_HEAD;
-	output();
-}
-
-void snakeExtent() {//蛇头碰到食物就伸长 
-	if(snakeLength < SNAKE_MAX_LENGTH) {
-		snakeY[snakeLength] = snakeY[snakeLength - 1];
-		snakeX[snakeLength] = snakeX[snakeLength - 1];
-		snakeLength ++ ;
-	}//判断蛇长度是否小于最长长度，若是，则伸长 
-	else map[snakeY[snakeLength-1]][snakeX[snakeLength-1]];
-} 
-
-
-int main() { 	
-	char ch;			
-	output();//输出初始状态	
-	put_money();
-	while(judge()) {//判断游戏是否结束，若未结束，则进行移动 
-		scanf("%c",&ch);				
-		switch(ch) {	//ASDW分别代表的移动方向		
-			case 'A': 				
-				snakeMove (-1, 0);				
-				break;			
-			case 'S':				
-				snakeMove (0, 1);				
-				break;			
-			case 'D':				
-				snakeMove (1, 0);				
-				break; 			
-			case 'W':				
-				snakeMove (0, -1);			
-				break;			
-		}
-		if(moneyX == snakeX[0] && moneyY == snakeY[0])
-			snakeExtent();
-		system("cls");
-		output();	//输出移动后状态	
-	}
-	printf("%s","Came Over!!!");
-}
