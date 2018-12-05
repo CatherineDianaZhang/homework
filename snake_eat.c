@@ -117,7 +117,7 @@ int main() {
 				snakeMove (0, -1);			
 				break;			
 		}
-		if(moneyX[0] == snakeX[0] && moneyY[0] == snakeY[0])
+		if(moneyX == snakeX[0] && moneyY == snakeY[0])
 			snakeExtent();
 		system("cls");
 		output();	//输出移动后状态	
