@@ -9,12 +9,12 @@
 #define BLANK_CELL ' '
 #define WALL_CELL '*'
 
-void snakeMove();//�ߵ��ƶ� 
-int gameover();//�ж���Ϸ�Ƿ���� 
-void output();//������ƶ����״̬ 
+void snakeMove();//蛇的移动 
+int gameover();//判断游戏是否结束 
+void output();//输出蛇移动后的状态 
 
 
-//��ʼ״̬ 
+//初始状态 
 char map[12][12] = {"************",
                     "*XXXXH     *",
                     "*          *",
@@ -29,7 +29,7 @@ char map[12][12] = {"************",
                     "************"
 					};
 
-//�ߵ������ͷ�� 
+//蛇的身体和头部 
 int snakeLength=5;
 int snakeX[5]={1,2,3,4,5};
 int snakeY[5]={1,1,1,1,1};
@@ -37,11 +37,11 @@ int snakeY[5]={1,1,1,1,1};
 
 int main() {
     char ch;
-    output();
+    output();//输出初始状态
     while (1) {
         scanf(" %c", &ch);  
 		snakeMove(); 
-        switch (ch) {
+        switch (ch) {//四个键对应蛇头移动方向
         case 'w' :
             snakeY[4] -= 1;
             map[snakeY[4]][snakeX[4]] = 'H';
@@ -59,12 +59,13 @@ int main() {
             printf("gameover\n");
         } 
 		else {
-			system("cls");
+			system("cls");//刷新界面
             output();
     	}
     }
 }
 
+//蛇的移动，将最后一节身体设置为空，头部设置为身体
 void snakeMove() {
     int i;
     map[snakeY[0]][snakeX[0]] = ' ';
@@ -81,16 +82,17 @@ int gameover() {
     }
     if (snakeY[4] == 10 || snakeY[4] == 0) {
         return 0;
-    }
+    }//蛇头碰到边界，游戏结束
     int i;
     for (i = 0; i < 4; i++) {
         if (snakeX[4] == snakeX[i] && snakeY[4] == snakeY[i]) {
             return 0;
         }
-    }
+    }//蛇头碰到身体，游戏结束
     return 1;
 }
 
+//输出新的状态
 void output() {
 	int i,j;
     for (i = 0; i <= 11; i++) {

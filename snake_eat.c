@@ -31,20 +31,20 @@ char map[12][12] = {"************",
                     "************"
 					};
 
-//蛇身和蛇头的坐标，snakeX[0]和snakeY[o]为蛇头 
+//蛇身和蛇头的坐标，snakeX[0]和snakeY[0]为蛇头 
 int snakeX[10]={5,4,3,2,1};
 int snakeY[10]={1,1,1,1,1};
 int snakeLength=5;
 int moneyX,moneyY;
 
 int main() {
-    put_money();
+    put_money();//放置食物
     char ch;
-    output();
+    output();//输出初始状态
     while (1) {
         scanf(" %c", &ch);
         snakeMove();
-        switch (ch) {
+        switch (ch) {//对应四个键的蛇头移动方向
         	case 'w' :
             	snakeY[0] -= 1;
             	map[snakeY[0]][snakeX[0]] = 'H';
@@ -58,7 +58,7 @@ int main() {
             	snakeX[0] += 1;
             	map[snakeY[0]][snakeX[0]] = 'H';
     	}
-    	if (snakeX[0] == moneyX && snakeY[0] == moneyY) {
+    	if (snakeX[0] == moneyX && snakeY[0] == moneyY) {//如果蛇头遇到食物，则蛇身增长
             put_money();
             snakeLength++;
             snakeX[snakeLength - 1] = snakeX[snakeLength - 2];
@@ -69,12 +69,13 @@ int main() {
             printf("gameover\n");
         } 
 		else {
-			system("cls");
-            output();
+			system("cls");//刷新界面
+            output();//输出最新状态
     	}
     }
 }
 
+//蛇的移动，将最后一节设置为空，蛇头设置为蛇身
 void snakeMove() {
     int i;
     map[snakeY[snakeLength - 1]][snakeX[snakeLength - 1]] = ' ';
@@ -91,15 +92,17 @@ int gameover() {
     }
     if (snakeY[0] == 10 || snakeY[0] == 0) {
         return 0;
-    }
+    }//蛇头碰到边界，游戏结束
     int i;
     for (i = 1; i < snakeLength; i++) {
         if (snakeX[0] == snakeX[i] && snakeY[0] == snakeY[i]) {
             return 0;
         }
-    }
+    }//蛇头碰到蛇身，游戏结束
     return 1;
 }
+
+//输出最新状态
 void output() {
 	int i,j;
     for (i = 0; i <= 11; i++) {
@@ -109,6 +112,8 @@ void output() {
         printf("\n");
     }
 }
+
+//随机放置食物
 void put_money() {
     srand((unsigned)(time(NULL)));
     moneyX = rand() % 9 + 1;
