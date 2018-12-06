@@ -45,15 +45,19 @@ int main() {
         case 'w' :
             snakeY[4] -= 1;
             map[snakeY[4]][snakeX[4]] = 'H';
+            break; 
         case 's' :
             snakeY[4] += 1;
             map[snakeY[4]][snakeX[4]] = 'H';
+            break;
         case 'a' :
             snakeX[4] -= 1;
             map[snakeY[4]][snakeX[4]] = 'H';
+            break;
         case 'd' :
             snakeX[4] += 1;
             map[snakeY[4]][snakeX[4]] = 'H';
+            break;
     	}
         if (!gameover()) {
             printf("gameover\n");

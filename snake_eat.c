@@ -48,15 +48,19 @@ int main() {
         	case 'w' :
             	snakeY[0] -= 1;
             	map[snakeY[0]][snakeX[0]] = 'H';
+            	break; 
         	case 's' :
             	snakeY[0] += 1;
             	map[snakeY[0]][snakeX[0]] = 'H';
+            	break;
         	case 'a' :
             	snakeX[0] -= 1;
             	map[snakeY[0]][snakeX[0]] = 'H';
+            	break;
         	case 'd' :
             	snakeX[0] += 1;
             	map[snakeY[0]][snakeX[0]] = 'H';
+            	break;
     	}
     	if (snakeX[0] == moneyX && snakeY[0] == moneyY) {//如果蛇头遇到食物，则蛇身增长
             put_money();
